@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  Type: AWS::ECS::Cluster
+  Properties:
+    ClusterName: WarbandServerCluster
+    ClusterSettings:
+      - Name: containerInsights
+        Value: enabled
+    Tags:
+      - Key: CostGroup
+        Value: WarbandServer
+        
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: "WarbandServer"
+     Tags:
+      - Key: CostGroup
+        Value: WarbandServer
+        
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: WarbandServerCluster
+      DesiredCount: 1
+      LaunchType: EC2
+      Tags:
+        - Key: CostGroup
+          Value: WarbandServer
+
+
+

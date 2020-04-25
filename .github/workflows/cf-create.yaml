@@ -1,0 +1,24 @@
+# Create AWS Resources specified in CloudFormation
+
+name: WarbandServerInfra
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: mgenteluci/cloudformation-deploy-action@v1.3.0
+      env:
+        TEMPLATE: 'ecs.yaml'
+        AWS_STACK_NAME: 'warband-server-infra'
+        AWS_REGION: 'us-east-1'
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        AWS_DEPLOY_BUCKET: ${{secrets.AWS_DEPLOY_BUCKET}}
+    
